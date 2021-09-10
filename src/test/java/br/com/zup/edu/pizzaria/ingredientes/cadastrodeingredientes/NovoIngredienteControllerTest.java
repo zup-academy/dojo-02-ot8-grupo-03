@@ -69,6 +69,10 @@ class NovoIngredienteControllerTest {
                 .content(new ObjectMapper().writeValueAsString(body));
 
         mvc.perform(request)
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andReturn()
+                .getResponse()
+                .getContentAsString()
+                .contains("O Valor já esta cadastrado");;
     }
 }

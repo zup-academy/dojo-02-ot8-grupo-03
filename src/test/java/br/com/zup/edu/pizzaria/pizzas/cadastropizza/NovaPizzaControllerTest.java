@@ -87,15 +87,17 @@ class NovaPizzaControllerTest {
         /**
          * Pizza 02
          */
-        MockHttpServletRequestBuilder request = post("/api/pizzas")
+        NovaPizzaRequest bodyDuplicado = new NovaPizzaRequest("Pizza de Franpiry", idsDosIngredientes);
+        MockHttpServletRequestBuilder requestDuplicado = post("/api/pizzas")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(body));
+                .content(new ObjectMapper().writeValueAsString(bodyDuplicado));
 
         mvc.perform(request)
-                .andExpect(status().isCreated())
-                .andExpect(header().exists("Location"))
-                .andExpect(redirectedUrlPattern("/api/pizzas/{id}"));
-
+                .andExpect(status().isBadRequest())
+                .andReturn()
+                .getResponse()
+                .getContentAsString()
+                .contains("O Valor já esta cadastrado");;
     }
 
 }

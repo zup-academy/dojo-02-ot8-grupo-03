@@ -24,7 +24,6 @@ public class NovoPedidoController {
         this.pizzaRepository = pizzaRepository;
     }
 
-
     @PostMapping
     public ResponseEntity<?> novoPedido(NovoPedidoRequest request) {
 
