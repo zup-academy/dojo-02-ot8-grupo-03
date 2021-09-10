@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 
-public class UniqueValueValidator implements ConstraintValidator<UniqueValue,String> {
+public class UniqueValueValidator implements ConstraintValidator<UniqueValue, String> {
     private String atribute;
     private String className;
     private final EntityManager manager;
@@ -17,18 +17,18 @@ public class UniqueValueValidator implements ConstraintValidator<UniqueValue,Str
 
     @Override
     public void initialize(UniqueValue constraintAnnotation) {
-        atribute=constraintAnnotation.domainAtribute();
-        className=constraintAnnotation.domainClass().getSimpleName();
+        atribute = constraintAnnotation.domainAtribute();
+        className = constraintAnnotation.domainClass().getSimpleName();
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
 
-        String jpql="SELECT r FROM "+className+" r WHERE r."+atribute+" =:value";
+        String jpql = "SELECT r FROM " + className + " r WHERE r." + atribute + " =:value";
 
         Query possivelRegistroUnico = manager.createQuery(jpql);
 
-        possivelRegistroUnico.setParameter("value",value);
+        possivelRegistroUnico.setParameter("value", value);
 
         return possivelRegistroUnico.getResultList().isEmpty();
     }
