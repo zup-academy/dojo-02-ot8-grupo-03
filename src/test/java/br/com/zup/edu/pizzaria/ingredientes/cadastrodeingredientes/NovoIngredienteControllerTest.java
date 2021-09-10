@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -26,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class NovoIngredienteControllerTest {
 
 
@@ -60,8 +62,6 @@ class NovoIngredienteControllerTest {
                 .andExpect(header().exists("Location"))
                 .andExpect(redirectedUrlPattern("/api/ingredientes/{id}"));
 
-
-
         body = new NovoIngredienteRequest("Queijo muçarela", new BigDecimal("2.0"), 200);
 
         request = post("/api/ingredientes")
@@ -69,8 +69,6 @@ class NovoIngredienteControllerTest {
                 .content(new ObjectMapper().writeValueAsString(body));
 
         mvc.perform(request)
-                .andExpect(status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.errors").exists());
-
+                .andExpect(status().isBadRequest());
     }
 }
