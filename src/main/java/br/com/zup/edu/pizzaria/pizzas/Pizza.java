@@ -20,7 +20,7 @@ public class Pizza {
     @Column(unique = true, nullable = false)
     private String sabor;
 
-    private BigDecimal preco;
+    private BigDecimal preco = new BigDecimal(0);
 
     @ManyToMany
     private List<Ingrediente> ingredientes = new ArrayList<>();
@@ -28,7 +28,7 @@ public class Pizza {
     public Pizza(String sabor, List<Ingrediente> ingredientes) {
         this.sabor = sabor;
         this.ingredientes = ingredientes;
-        calcularPreco();
+        calcularPreco() ;
     }
 
     /**
