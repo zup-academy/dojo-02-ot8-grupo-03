@@ -1,6 +1,8 @@
 package br.com.zup.edu.pizzaria.ingredientes;
 
-import javax.annotation.processing.Generated;
+import org.hibernate.annotations.GenerationTime;
+
+import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
