@@ -33,4 +33,12 @@ public class NovoPedidoRequest {
 
         return pedido;
     }
+
+    public EnderecoRequest getEndereco() {
+        return endereco;
+    }
+
+    public List<ItemRequest> getItens() {
+        return itens;
+    }
 }

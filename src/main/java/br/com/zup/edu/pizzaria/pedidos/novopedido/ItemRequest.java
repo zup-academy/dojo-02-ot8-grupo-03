@@ -14,6 +14,10 @@ public class ItemRequest {
 
     private TipoDeBorda borda;
 
+    public ItemRequest(Long pizzaId, TipoDeBorda borda) {
+        this.pizzaId = pizzaId;
+        this.borda = borda;
+    }
 
     public Item paraItem(Pedido pedido, PizzaRepository repository) {
 
