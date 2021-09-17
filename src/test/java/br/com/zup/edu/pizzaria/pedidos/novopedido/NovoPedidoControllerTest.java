@@ -60,7 +60,7 @@ class NovoPedidoControllerTest {
     }
 
     @Test
-    void deveCadastraPedidoSemEndereco() throws Exception{
+    void deveCadastrarPedidoSemEndereco() throws Exception{
 
         Ingrediente ingrediente = new Ingrediente("Queijo", 1, new BigDecimal("5.0"));
         List<Ingrediente> ingredienteList = new ArrayList<>();
@@ -70,7 +70,7 @@ class NovoPedidoControllerTest {
 
         List<ItemRequest> itemRequestList = new ArrayList<>();
         itemRequestList.add(new ItemRequest(pizza.getId(), TipoDeBorda.TRADICIONAL));
-        NovoPedidoRequest novoPedidoRequest = new NovoPedidoRequest(null, itemRequestList);
+        NovoPedidoRequest novoPedidoRequest = new NovoPedidoRequest(new EnderecoRequest(), itemRequestList);
 
         MockHttpServletRequestBuilder request = post("/api/pedidos")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -79,7 +79,7 @@ class NovoPedidoControllerTest {
         mvc.perform(request)
                 .andExpect(status().isCreated())
                 .andExpect(header().exists("Location"))
-                .andExpect(redirectedUrlPattern("/api/ingredientes/{id}"));
+                .andExpect(redirectedUrlPattern("/api/pedidos/{id}"));
     }
 
 }

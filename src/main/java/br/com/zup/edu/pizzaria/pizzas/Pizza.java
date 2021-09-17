@@ -3,6 +3,8 @@ package br.com.zup.edu.pizzaria.pizzas;
 import br.com.zup.edu.pizzaria.ingredientes.Ingrediente;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ public class Pizza {
     private BigDecimal preco;
 
     @ManyToMany
+    @Size(min = 1)
     private List<Ingrediente> ingredientes = new ArrayList<>();
 
     public Pizza(String sabor, List<Ingrediente> ingredientes, BigDecimal preco) {

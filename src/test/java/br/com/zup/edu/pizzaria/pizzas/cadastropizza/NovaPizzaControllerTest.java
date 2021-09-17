@@ -2,6 +2,12 @@ package br.com.zup.edu.pizzaria.pizzas.cadastropizza;
 
 import br.com.zup.edu.pizzaria.ingredientes.Ingrediente;
 import br.com.zup.edu.pizzaria.ingredientes.IngredienteRepository;
+import br.com.zup.edu.pizzaria.pedidos.TipoDeBorda;
+import br.com.zup.edu.pizzaria.pedidos.novopedido.EnderecoRequest;
+import br.com.zup.edu.pizzaria.pedidos.novopedido.ItemRequest;
+import br.com.zup.edu.pizzaria.pedidos.novopedido.NovoPedidoRequest;
+import br.com.zup.edu.pizzaria.pizzas.Pizza;
+import br.com.zup.edu.pizzaria.pizzas.PizzaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.util.Assert;
 
 import javax.transaction.Transactional;
 
@@ -32,6 +39,9 @@ class NovaPizzaControllerTest {
 
     @Autowired
     private IngredienteRepository ingredienteRepository;
+
+    @Autowired
+    private PizzaRepository pizzaRepository;
 
     @Test
     void deveCadastrarNovaPizza() throws Exception {
@@ -97,7 +107,19 @@ class NovaPizzaControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString()
-                .contains("O Valor já esta cadastrado");;
+                .contains("O Valor já esta cadastrado");
+    }
+
+    void naoDeveCadastrarPizzaSemIngredientes() throws Exception {
+
+        List<Ingrediente> ingredienteList = new ArrayList<>();
+        Pizza pizza = new Pizza("Queijo", ingredienteList, new BigDecimal(20));
+
+        try {
+            pizza = pizzaRepository.save(pizza);
+        } catch (Exception e) {
+            Assert.isTrue(e.getMessage().equals("erro!"));
+        }
     }
 
 }
