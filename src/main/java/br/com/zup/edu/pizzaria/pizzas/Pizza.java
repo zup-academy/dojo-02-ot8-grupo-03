@@ -22,7 +22,7 @@ public class Pizza {
     @Column(unique = true, nullable = false)
     private String sabor;
 
-    private BigDecimal preco;
+    private BigDecimal preco = new BigDecimal(0);
 
     @ManyToMany
     @Size(min = 1)

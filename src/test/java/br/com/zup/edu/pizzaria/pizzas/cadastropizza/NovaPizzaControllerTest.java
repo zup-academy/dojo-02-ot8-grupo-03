@@ -110,15 +110,15 @@ class NovaPizzaControllerTest {
                 .contains("O Valor já esta cadastrado");
     }
 
+    @Test
     void naoDeveCadastrarPizzaSemIngredientes() throws Exception {
 
-        List<Ingrediente> ingredienteList = new ArrayList<>();
-        Pizza pizza = new Pizza("Queijo", ingredienteList, new BigDecimal(20));
+        Pizza pizza = new Pizza("Queijo", new ArrayList<Ingrediente>(), new BigDecimal(20));
 
         try {
-            pizza = pizzaRepository.save(pizza);
+            pizzaRepository.save(pizza);
         } catch (Exception e) {
-            Assert.isTrue(e.getMessage().equals("erro!"));
+            Assert.isTrue(e.getMessage().contains("tamanho deve ser entre 1 e"));
         }
     }
 
