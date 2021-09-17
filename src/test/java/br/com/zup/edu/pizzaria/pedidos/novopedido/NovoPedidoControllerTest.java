@@ -43,7 +43,7 @@ class NovoPedidoControllerTest {
         Ingrediente ingrediente = new Ingrediente("Queijo", 1, new BigDecimal("5.0"));
         List<Ingrediente> ingredienteList = new ArrayList<>();
         ingredienteList.add(ingrediente);
-        Pizza pizza = new Pizza("Queijo", ingredienteList);
+        Pizza pizza = new Pizza("Queijo", ingredienteList, new BigDecimal(20));
         pizzaRepository.save(pizza);
 
         EnderecoRequest enderecoRequest = new EnderecoRequest("Rua abc", "123", "Muro branco", "12345678");
@@ -57,6 +57,29 @@ class NovoPedidoControllerTest {
 
         mvc.perform(request)
                 .andExpect(status().isCreated());
+    }
+
+    @Test
+    void deveCadastraPedidoSemEndereco() throws Exception{
+
+        Ingrediente ingrediente = new Ingrediente("Queijo", 1, new BigDecimal("5.0"));
+        List<Ingrediente> ingredienteList = new ArrayList<>();
+        ingredienteList.add(ingrediente);
+        Pizza pizza = new Pizza("Queijo", ingredienteList, new BigDecimal(20));
+        pizzaRepository.save(pizza);
+
+        List<ItemRequest> itemRequestList = new ArrayList<>();
+        itemRequestList.add(new ItemRequest(pizza.getId(), TipoDeBorda.TRADICIONAL));
+        NovoPedidoRequest novoPedidoRequest = new NovoPedidoRequest(null, itemRequestList);
+
+        MockHttpServletRequestBuilder request = post("/api/pedidos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(novoPedidoRequest));
+
+        mvc.perform(request)
+                .andExpect(status().isCreated())
+                .andExpect(header().exists("Location"))
+                .andExpect(redirectedUrlPattern("/api/ingredientes/{id}"));
     }
 
 }
