@@ -1,6 +1,7 @@
 package br.com.zup.edu.pizzaria.pedidos.novopedido;
 
 import br.com.zup.edu.pizzaria.ingredientes.Ingrediente;
+import br.com.zup.edu.pizzaria.pedidos.Pedido;
 import br.com.zup.edu.pizzaria.pedidos.TipoDeBorda;
 import br.com.zup.edu.pizzaria.pizzas.Pizza;
 import br.com.zup.edu.pizzaria.pizzas.PizzaRepository;
@@ -55,10 +56,7 @@ class NovoPedidoControllerTest {
                 .content(new ObjectMapper().writeValueAsString(novoPedidoRequest));
 
         mvc.perform(request)
-                .andExpect(status().isCreated())
-                .andExpect(header().exists("Location"))
-                .andExpect(redirectedUrlPattern("/api/pedidos/{id}"));
-
+                .andExpect(status().isCreated());
     }
 
 }

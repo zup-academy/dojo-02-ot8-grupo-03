@@ -25,4 +25,12 @@ public class ItemRequest {
 
         return new Item(pedido, borda, possivelPizza.get());
     }
+
+    public Long getPizzaId() {
+        return pizzaId;
+    }
+
+    public TipoDeBorda getBorda() {
+        return borda;
+    }
 }

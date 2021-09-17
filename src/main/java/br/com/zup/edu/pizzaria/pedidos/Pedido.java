@@ -20,13 +20,13 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido")
     private List<Item> itens = new ArrayList<>();
 
-    private BigDecimal total;
+    private BigDecimal total = new BigDecimal(0);
 
     /**
      * @deprecated para uso do hibernate apenas
      */
     @Deprecated
-    public Pedido() { }
+    public Pedido() {}
 
     public Pedido(Endereco enderecoDeEntrega) {
         this.enderecoDeEntrega = enderecoDeEntrega;
